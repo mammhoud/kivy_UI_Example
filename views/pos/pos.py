@@ -15,19 +15,23 @@ class Pos(BoxLayout):
     current_total = NumericProperty(0.0)
     current_cart = ListProperty([])
     def __init__(self, **kwargs):
+        
+        #Clock.schedule_once(self.render, .6)
         super().__init__(**kwargs)
-        Clock.schedule_once(self.render, .1)
         
     def render(self, _):
-        prods1 = []
-        for x in range(0):
+        prods = []
+        
+        for x in range(6):
             prod= { 
                    'name': f"Product #0",
                    'pcode': str(x).zfill(8),
                    'price': randint(2, 25),
                    'qty': 1}
             prods.append(prod)
-        self.ids.ti_search.products = prods1
+            print(prods)
+            print(self.ids.ti_search.products)
+        self.ids.ti_search.products = prods
         
         
     def qty_control(self, tile, increasing=False):
@@ -76,7 +80,7 @@ class Pos(BoxLayout):
             self.qty_control(inst,increasing=True)
         else:
             self.surrent_cart.append(data)
-        self.current_total += round(float(data['price']),2)
+        #self.current_total += round(float(data['price']),2)
         
         self.current_cart.append(data)
     def update_total(self):
@@ -123,7 +127,7 @@ class ProductTile(BoxLayout):
     qty_callback = ObjectProperty(allownone=True)
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        Clock.schedule_once(self.render, .1)
+        #Clock.schedule_once(self.render, .1)
         
     def render(self, _):
         pass 
@@ -136,7 +140,7 @@ class ReceiptItem(BoxLayout):
     price = NumericProperty(0)
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        Clock.schedule_once(self.render, .1)
+        #Clock.schedule_once(self.render, .1)
         
     def render(self, _):
         pass 

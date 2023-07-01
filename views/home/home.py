@@ -13,8 +13,8 @@ from kivy.properties import StringProperty, ListProperty, ColorProperty, Numeric
 
 Builder.load_file('views/home/home.kv')
 class Home(BoxLayout):
-    def __init__(self, **kw):
-        super().__init__(**kw)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         Clock.schedule_once(self.render, .1)
 
     def render(self, _):

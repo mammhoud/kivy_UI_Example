@@ -104,13 +104,13 @@ class OutlineTextField(FlatField):
                 width=dp(1.5),
                 rounded_rectangle=[self.pos[0], self.pos[1], self.size[0], self.size[1], self.radius[0]]
             )
-            # self.border_draw = RoundedRectangle(pos=self.pos, size=self.size, radius=self.radius)
-            # self.back_color = Color(rgba=self.main_color)
-            # self.back_draw = RoundedRectangle(
-            #     pos=[self.pos[0]+1.5, self.pos[1]+1.5], 
-            #     size=[self.size[0]-3, self.size[1]-3], 
-            #     radius=self.radius
-            #     )
+            self.border_draw = RoundedRectangle(pos=self.pos, size=self.size, radius=self.radius)
+            self.back_color = Color(rgba=self.main_color)
+            self.back_draw = RoundedRectangle(
+                pos=[self.pos[0]+1.5, self.pos[1]+1.5], 
+                size=[self.size[0]-3, self.size[1]-3], 
+                radius=self.radius
+                 )
 
         self.bind(size=self.update)
         self.bind(pos=self.update)
@@ -140,7 +140,7 @@ class SearchBar(FlatField):
         self.dropdown=None
     def on_text(self, inst, text):
         try:
-            
+            print( "on_text")
             if self.dropdown:
                 self.dropdown.dismiss()
                 self.dropdown = None
@@ -148,48 +148,31 @@ class SearchBar(FlatField):
             self.show_suggestions(text)
             
         except Exception as e:
-            print(e)
+            print(e,'on_text')
         
     def keyboard_on_key_down(self, window,kc, text, modifiers):
-        
-       # if len(self.text) == 1 or not text:
-        if self.dropdown:
-            self.dropdown.dismiss()
-            self.dropdown = None
-        if kc[0] == ord("\r"): 
-            self.text= self.values[0]
+        try:
+            print( "keyboard_on_key_down")
+        # if len(self.text) == 1 or not text:
+            if self.dropdown:
+                self.dropdown.dismiss()
+                self.dropdown = None
             
-            
-        else:
             super().keyboard_on_key_down(window,kc,text,modifiers)
-    
+        except Exception as e:
+            print(e+ "keyboard_on_key_down")
     
     
     def show_suggestions(self, suggestion: str):
-        try:
-            self.dropdown = DropDown()
-            self.dropdown.autowidth = False
-            self.dropdown.size_hint_x= None
-            self.dropdown.width= Window.width*.4
-            for c in self.choices:
-                b = Button()
-                if self.suggestion_widget:
-                    b = self.suggestion_widget()
-                b.text = c 
-                b.size_hint_y= None
-                b.height= dp(54)
-                self.dropdown.add_widget(b)
-                x+=1
-            if x >0:
-                self.dropdown.open(self)
-        except Exception as e: 
-            print(e)
-            self.choices.clear()####
-            suggestions = self.get_suggestions(suggestion)###############
-            self.choices= suggestions##############
+            try:
+                self.choices.clear()####
+                suggestions = self.get_suggestions(suggestion)
+                self.choices= suggestions
+            except Exception as e:
+                print(e+ "show_suggestions")
     
     def on_choices(self, inst, choices):
-        print('changed -----')
+        print('changed --on_choices---')
         try: 
             # get the suggestions 
             self.dropdown = DropDown()
@@ -202,8 +185,8 @@ class SearchBar(FlatField):
             for c in self.choices:
                 b= Button()
                 b= SuggestionWidget()
-                # if self.suggestion_widget:
-                    # b=self.suggesion_widge()
+                if self.suggestion_widget:
+                    b=self.suggesion_widge()
                 b.name = c['name']
                 b.pcode= c['pcode']
                 b.price= c['price']
@@ -218,7 +201,7 @@ class SearchBar(FlatField):
             if x> 0:
                 self.dropdown.open(self)
         except Exception as e:
-            print(e)
+            print(e,"on_choices")
     def suggest(self,inst):
         if self.callback:
             self.callback(inst)
@@ -228,7 +211,7 @@ class SearchBar(FlatField):
             
         
     def get_suggestions(self, suggestion):
-        prods = self.products ##############
+        prods = self.products 
         print(prods)
       #  for x in range(4):
         #    pcode = randint(1,2)
@@ -239,7 +222,7 @@ class SearchBar(FlatField):
            #     "pcode": str(pcode).zfill(8)
            # } 
             #prods.append(prod)
-        return prods #########
+        return prods 
         
                         
     def open_dropdown(self, *args):

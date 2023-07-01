@@ -2,8 +2,9 @@
 Python Project-Using kivy framwork 
 
 
-## The base Assets 
-[GitHub Repo](https://github.com/qodzero/kivy_pos_assets.git)
+### The base Assets 
+
+[GitHub Repo-cloned](https://github.com/qodzero/kivy_pos_assets.git)
 
 ## Screenshot 
 

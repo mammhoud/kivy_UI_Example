@@ -13,8 +13,8 @@
 				width: self.height
 				Image: 
 					source: 'assets/imgs/logo-light.png'
+					anchor_x: "right"
 			AnchorLayout:
-				anchor_x: "left"
 				padding: [dp(24),dp(4)] 
 				BackBox:
 					bcolor: app.color_secondary_bg
@@ -32,7 +32,10 @@
 						halign: "center"
 						valign: "middle"
 					SearchBar:
+						id: ti_search.choices = prods
 						hint_text: 'search by podact_name or code'
+						callback: root.add_product
+						
 		BoxLayout:
 			spacing: dp(12)
 			orientation: 'vertical'
@@ -40,19 +43,22 @@
 			BackBox:
 				size_hint_y: None
 				height: dp(48)
+				#padding: [dp(12),dp(12),dp(12),dp(12)]
+				width: self.height
 				bcolor: app.color_secondary_bg
 				spacing: dp(12)
 				padding: [dp(12),dp(2)]
 				Text:
-					text: 'product Code'
+					text: 'Code'
 					font_name: app.fonts.heading
 					font_size: app.fonts.size.h3
 					color: app.color_primary_text
+
 					valign: 'middle'
 					size_hint_x: .2
 
 				Text:
-					text: 'product Name'
+					text: 'Name'
 					font_name: app.fonts.heading
 					font_size: app.fonts.size.h3
 					color: app.color_primary_text
@@ -89,33 +95,195 @@
 		orientation:'vertical'
 		size_hint_x: .3
 		bcolor: app.color_alternate
+		spacing: dp(12)
+		padding: [0,0,0,dp(15)]
+		BoxLayout:
+			size_hint_y: None
+			height: dp(64)
+			spacing: dp(12)
+			FlatButton:
+				text: icon("icon-bell")
+				color: app.color_primary_text
+				font_size: app.fonts.size.h1
+				size_hint_x: None
+				width: self.height
+			Widget:
+			BoxLayout:
+				RelativeLayout:
+					Text:
+						text: icon("icon-chevron-down")
+						color: app.color_primary_text
+						font_size: app.fonts.size.h2
+						halign: "right"
+					BoxLayout:
+						
+						padding: [0,0,dp(24),0]
+						Spinner:
+							text:"First."
+							font_name: app.fonts.styled
+							color: app.color_primary_text
+							font_size: app.fonts.size.h3
+							text_size: self.size
+							halign: "right"
+							valign: "middle"
+							values: ['profile', 'logout']
+							background_normal: ""
+							background_down: ""
+							background_color: [0,0,0,0]
+		Divider:
+			id: br
+		BoxLayout:
+			orientation: 'vertical'
+			spacing: dp(8)
+			BoxLayout:
+				size_hint_y: None
+				height: dp(20)
+				Text:
+					text: "Current Cart"
+					color: app.color_primary
+					font_size:app.fonts.size.h3
+					halign: "center"
+			BoxLayout:
+				orientation: 'vertical'
+				spacing: dp(8)
+				padding: dp(12)
+				BoxLayout:
+					id: header_box
+					size_hint_y: None
+					halign: "center"
+					spacing: dp(4)
+					height: dp(24)
+					Text:
+						text: "product Name"
+						color: app.color_primary_text
+						font_size:app.fonts.size.h3
+						halign: "left"
+						size_hint_x: .5
+					Text:
+						text: "QTY"
+						color: app.color_primary_text
+						font_size:app.fonts.size.h3
+						halign: "center"
+						size_hint_x: .25
+					Text:
+						text: "Price"
+						color: app.color_primary_text
+						font_size:app.fonts.size.h3
+						halign: "right"
+						size_hint_x: .25
+			
+			Divider:
+			BoxLayout:
+				ScrollView:
+					do_scroll: [False, True]
+					size_hint_y: None
+					height: self.parent.height
+					GridLayout:
+						id: g1_receipt
+						cols: 1
+						spacing: dp(12)
+						size_hint_y: None
+						height: self.minimum_height
+						
+
+
+		Divider:
+			id: br
+		BoxLayout:
+			size_hint_y: None
+			height: dp(54)
+			orientation: "vertical"
+			spacing: dp(8)
+			padding: [dp(12),0]
+			BoxLayout:
+				spacing: dp(12)
+				Text: 
+					text: "Total"
+					font_name: app.fonts.heading
+					font_size: app.fonts.size.h2
+					color: app.color_primary_text
+					halign: "left"
+				Text: 
+					text: "$ %s"%round(root.current_total,2)
+					font_name: app.fonts.heading
+					font_size: app.fonts.size.h2
+					color: app.color_primary_text
+					halign: "right"
+
+
+			RoundedButton:
+				text:"Print Receipt"
+				font_name: app.fonts.heading
+				font_size: app.fonts.size.h3
+				color: rgba("#ffffff")
+				bcolor: app.color_primary
+				radius: [self.height*.09]
+				
 
 
 
-<ProductTile>:
+<Divider@Widget>:
 	size_hint_y: None
-	height: dp(48)
-	bcolor: app.color_secondary_bg
-	spacing: dp(12)
-	padding: [dp(12),dp(2)]
+	height: dp(1.2)
+	canvas.before:
+		Color:
+			rgba: rgba("#d4d4d4")
+		Rectangle:
+			pos: self.pos
+			size: self.size 
+
+
+<ReceiptItem>:
+	size_hint_y: None
+	spacing: dp(4)
+	height: dp(24)
+	Text:
+		text: root.name
+		font_name: app.fonts.body
+		color: app.color_primary_text
+		font_size:app.fonts.size.h3
+		halign: "left"
+		size_hint_x: .5
+	Text:
+		text: str(root.qty)
+		font_name: app.fonts.body
+		color: app.color_primary_text
+		font_size:app.fonts.size.h3
+		halign: "center"
+		size_hint_x: .25
+	Text:
+		text: str(round(root.price,2))
+		font_name: app.fonts.body
+		color: app.color_primary_text
+		font_size:app.fonts.size.h3
+		halign: "right"
+		size_hint_x: .25
+<ProductTile>:
 	canvas.after:
 		Color:
 			rgba: app.color_secondary_bg
 		Rectangle:
 			pos: self.pos
 			size: [self.size[0], dp(1)]
+	size_hint_y: None
+	height: dp(48)
+	bcolor: app.color_secondary_bg
+	spacing: dp(12)
+	padding: [dp(12),dp(2)]
 	Text:
 		text: root.pcode
-		font_name: app.fonts.body
-		font_size: app.fonts.size.h3
+		bcolor: app.color_alternate
+		font_name: app.fonts.heading
+		font_size: app.fonts.size.h4
 		color: app.color_primary_text
 		valign: 'middle'
 		size_hint_x: .2
 
 	Text:
 		text: str(root.name)
-		font_name: app.fonts.body
-		font_size: app.fonts.size.h3
+		bcolor: app.color_alternate
+		font_name: app.fonts.heading
+		font_size: app.fonts.size.h4
 		color: app.color_primary_text
 		valign: 'middle'
 		size_hint_x: .4
@@ -125,25 +293,27 @@
 		FlatButton:
 			text: icon("icon-minus-circle")
 			color: app.color_tertiary 
-			font_size: app.fonts.size.h1
+			font_size: app.fonts.size.h2
 			on_release: root.qty_callback(root, False) if root.qty_callback else print
 		Text:
 			text: str(root.qty)
+			bcolor: app.color_alternate
 			font_name: app.fonts.heading
-			font_size: app.fonts.size.h3
+			font_size: app.fonts.size.h4
 			color: app.color_primary_text
 			valign: 'middle'
 			halign: 'center'
 		FlatButton:
 			text: icon("icon-plus-circle")
 			color: app.color_secondary
-			font_size: app.fonts.size.h1
+			font_size: app.fonts.size.h2
 			on_release: root.qty_callback(root, True) if root.qty_callback else print
 
 	Text:
 		text: str(round(root.price, 2))
-		font_name: app.fonts.body
-		font_size: app.fonts.size.h3
+		bcolor: app.color_alternate
+		font_name: app.fonts.heading
+		font_size: app.fonts.size.h4
 		color: app.color_primary_text
 		valign: 'middle'
 		size_hint_x: .2

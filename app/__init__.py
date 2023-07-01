@@ -25,8 +25,8 @@ class MainApp(App):
     fonts.size.h5 = dp(14)
     fonts.size.h6 = dp(12)
     fonts.heading = 'assets/fonts/Roboto/Roboto-Black.ttf'
-    fonts.subheading = 'assets/fonts/Roboto/Roboto-Medium.ttf'
-    fonts.body = 'assets/fonts/feather/feather.ttf'
+    fonts.subheading = 'assets/fonts/Roboto/Roboto-Bold.ttf'
+    fonts.body = 'assets/fonts/Roboto/Roboto-Medium.ttf'
     fonts.styled = 'assets/fonts/Lobster/Lobster-Regular.ttf'
 
     def build(self):

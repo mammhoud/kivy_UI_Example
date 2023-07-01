@@ -146,11 +146,13 @@
 			BoxLayout:
 				orientation: 'vertical'
 				spacing: dp(8)
+				
+				#height: dp(24)
 				padding: dp(12)
 				BoxLayout:
 					id: header_box
 					size_hint_y: None
-					halign: "center"
+					#halign: "center"
 					spacing: dp(4)
 					height: dp(24)
 					Text:
@@ -171,20 +173,20 @@
 						font_size:app.fonts.size.h3
 						halign: "right"
 						size_hint_x: .25
-			
-			Divider:
-			BoxLayout:
-				ScrollView:
-					do_scroll: [False, True]
-					size_hint_y: None
-					height: self.parent.height
-					GridLayout:
-						id: g1_receipt
-						cols: 1
-						spacing: dp(12)
+				
+				Divider:
+				BoxLayout:
+					ScrollView:
+						do_scroll: [False, True]
 						size_hint_y: None
-						height: self.minimum_height
-						
+						height: self.parent.height
+						GridLayout:
+							id: g1_receipt
+							cols: 1
+							spacing: dp(8)
+							size_hint_y: None
+							height: self.minimum_height
+							
 
 
 		Divider:

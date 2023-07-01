@@ -19,15 +19,15 @@ class Pos(BoxLayout):
         Clock.schedule_once(self.render, .1)
         
     def render(self, _):
-        prods = []
-        for x in range(4):
+        prods1 = []
+        for x in range(0):
             prod= { 
                    'name': f"Product #0",
                    'pcode': str(x).zfill(8),
                    'price': randint(2, 25),
                    'qty': 1}
             prods.append(prod)
-        self.ids.ti_search.choices = prods
+        self.ids.ti_search.products = prods1
         
         
     def qty_control(self, tile, increasing=False):
@@ -70,6 +70,12 @@ class Pos(BoxLayout):
                 "pcode": inst.pcode,
                 "price": inst.price,
                 "qty": 1}
+        tmp = list(filter(lambda x: ['pcode']==inst.pcode, self.current_cart))
+        if len(tmp)>0:
+            #update qty 
+            self.qty_control(inst,increasing=True)
+        else:
+            self.surrent_cart.append(data)
         self.current_total += round(float(data['price']),2)
         
         self.current_cart.append(data)

@@ -129,7 +129,9 @@ class OutlineTextField(FlatField):
 
 
 class SearchBar(FlatField):
-    #choices = ListProperty(['Product 1','Product 2', 'product 3'])
+    choices = ListProperty([])
+    products = ListProperty([])
+
     suggestion_widget= ObjectProperty(allownone=True)
     callback= ObjectProperty(alownone=True)
     def __init__(self, **kw):
@@ -182,10 +184,12 @@ class SearchBar(FlatField):
                 self.dropdown.open(self)
         except Exception as e: 
             print(e)
+            self.choices.clear()####
             suggestions = self.get_suggestions(suggestion)###############
             self.choices= suggestions##############
     
     def on_choices(self, inst, choices):
+        print('changed -----')
         try: 
             # get the suggestions 
             self.dropdown = DropDown()
@@ -224,16 +228,17 @@ class SearchBar(FlatField):
             
         
     def get_suggestions(self, suggestion):
-        prods = self.choices ##############
-        for x in range(4):
-            pcode = randint(1,2)
-            prod= {  
-                "name": f"Product {x}",
-                "qty": 1,
-                "price": 400,
-                "pcode": str(pcode).zfill(8)
-            } 
-            prods.append(prod)
+        prods = self.products ##############
+        print(prods)
+      #  for x in range(4):
+        #    pcode = randint(1,2)
+         #   prod= {  
+         #       "name": f"Product {x}",
+          #      "qty": 1,
+           #     "price": 400,
+           #     "pcode": str(pcode).zfill(8)
+           # } 
+            #prods.append(prod)
         return prods #########
         
                         

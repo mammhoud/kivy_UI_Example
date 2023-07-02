@@ -5,7 +5,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.button import Button
 from kivy.clock import Clock, mainthread
-
 from kivy.graphics import Color, RoundedRectangle, Line
 from kivy.properties import ColorProperty, ListProperty, ObjectProperty, StringProperty,NumericProperty
 from kivy.core.window import Window
@@ -16,36 +15,62 @@ from random import randint
 Builder.load_string("""
 <FlatField>:
     padding: [dp(6), (self.height - self.line_height)/2]
-<SuggestionWidget>:
-    size_hint_x: None
-    height: dp(42)
-    spacing: dp(8)
-    padding:[dp(12),0]
-    #color: rgba("#ffffff")
-    canvas.before:
-        Color: 
-            rgba: rgba("#afaa22")
-        Rectangle:
-            pos: self.pos
-            size: self.size
-    Text:
-        text: str(root.pcode) #catched error !
-        color: rgba("#ffffff")
-        font_size: app.fonts.size.h4
-        font_name: app.fonts.body
-        size_hint_x: .3
-    Text:
-        text: str(root.name)
-        color: rgba("#ffffff")
-        font_size: app.fonts.size.h4
-        font_name: app.fonts.body
-        size_hint_x: .3
-    Text:
-        text: "$%s"%str(round(root.price,2))
-        color: rgba("#ffffff")
-        font_size: app.fonts.size.h4
-        font_name: app.fonts.body
-        size_hint_x: .2
+<SuggestionWidget>:    
+    BackBox:
+        
+    	bcolor: app.color_secondary_text
+        canvas.before:
+            Color: 
+                rgba: app.color_tertiary
+            Rectangle:
+                pos: self.pos
+                size: [self.size[0], dp(2)]
+        Image: 
+            source: 'assets/imgs/back.png'#to:do add the image secuance for the app/products
+            height: dp(24)
+            size_hint_x: None
+            width: self.height
+            halign: "left"
+            valign: "middle"	
+            anchor_x: "center"
+        BoxLayout:
+            height: self.height
+            canvas.after:
+                Color: 
+                    rgba: app.color_tertiary
+                Rectangle:
+                    pos: self.pos
+                    size: [self.size[0], dp(2)]
+            BackBox:
+                size_hint_y: None
+                height: dp(48)
+                spacing: dp(4)
+                padding: [dp(12),dp(2)]
+                bcolor: app.color_primary
+                canvas.before:
+                    Color: 
+                        rgba: app.color_tertiary
+                    Rectangle:
+                        pos: self.pos
+                        size: [self.size[0], dp(2)]
+                Text:
+                    text: str(root.pcode) #catched error !
+                    color: app.color_primary_text
+                    font_size: app.fonts.size.h4
+                    font_name: app.fonts.body
+                    size_hint_x: .3
+                Text:
+                    text: str(root.name)
+                    color: app.color_primary_text
+                    font_size: app.fonts.size.h4
+                    font_name: app.fonts.body
+                    size_hint_x: .3
+                Text:
+                    text: "$%s"%str(round(root.price,2))
+                    color: app.color_primary_text
+                    font_size: app.fonts.size.h4
+                    font_name: app.fonts.body
+                    size_hint_x: .2       
 """)
 
 class FlatField(TextInput):
@@ -143,7 +168,6 @@ class SearchBar(FlatField):
         self.dropdown=None
     def on_text(self, inst, text):
         try:
-            print( "on_text")
             if self.dropdown:
                 self.dropdown.dismiss()
                 self.dropdown = None
@@ -151,11 +175,10 @@ class SearchBar(FlatField):
             self.show_suggestions(text)
             
         except Exception as e:
-            print(e,'on_text')
+            print(e,'on_text method')
         
     def keyboard_on_key_down(self, window,kc, text, modifiers):
         try:
-            print( "keyboard_on_key_down")
         # if len(self.text) == 1 or not text:
             if self.dropdown:
                 self.dropdown.dismiss()
@@ -163,7 +186,7 @@ class SearchBar(FlatField):
             
             super().keyboard_on_key_down(window,kc,text,modifiers)
         except Exception as e:
-            print(e+ "keyboard_on_key_down")
+            print(e+ "keyboard_on_key_down method")
     
     
     def show_suggestions(self, suggestion: str):
@@ -175,18 +198,14 @@ class SearchBar(FlatField):
                 print(e+ "show_suggestions")
     
     def on_choices(self, inst, choices):
-        print('changed --on_choices---')
         try: 
             # get the suggestions 
             self.dropdown = DropDown()
             self.dropdown.autowidth= False
             self.dropdown.size_hint_x = None
             self.dropdown.width = Window.width*.4
-            print("#######################################")
 
             x:int = 0
-            print(self.choices)
-            print("#######################################")
             for c in self.choices:
                 #b= Button()
                 b= SuggestionWidget()
@@ -208,7 +227,7 @@ class SearchBar(FlatField):
             if x> 0:
                 self.dropdown.open(self)
         except Exception as e:
-            print(e,"on_choices file")
+            print(e,"on_choices method")
     def suggest(self,inst):
         if self.callback:
             self.callback(inst)
@@ -219,7 +238,6 @@ class SearchBar(FlatField):
         
     def get_suggestions(self, suggestion):
         prods = self.products 
-        print(prods)
       #  for x in range(4):
         #    pcode = randint(1,2)
          #   prod= {  

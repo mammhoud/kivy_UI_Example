@@ -22,17 +22,14 @@ class Pos(BoxLayout):
     def render(self, _):
         prods = []
         
-        for x in range(4):
+        for x in range(100):
             prod= { 
                    "name": f"Product #0{x}",
                    "pcode": str(x).zfill(8),
                    "price": randint(30000, 300000),
                    "qty": 1}
             prods.append(prod)
-            #print(prods)
-            print("Hello",self.ids.ti_search.products)
         self.ids.ti_search.products = prods
-        print("Hello",self.ids.ti_search.products)
 
         
     def qty_control(self, tile, increasing=False):

@@ -173,6 +173,12 @@
 						font_size:app.fonts.size.h3
 						halign: "right"
 						size_hint_x: .25
+					Text:
+						text: "total"
+						color: app.color_primary_text
+						font_size:app.fonts.size.h3
+						halign: "right"
+						size_hint_x: .5
 				
 				Divider:
 				BoxLayout:
@@ -218,7 +224,7 @@
 				font_name: app.fonts.heading
 				font_size: app.fonts.size.h3
 				color: rgba("#ffffff")
-				bcolor: app.color_primary
+				bcolor: rgba("#22afaa")
 				radius: [self.height*.1]
 				on_release: root.checkout()
 				
@@ -256,6 +262,13 @@
 		size_hint_x: .25
 	Text:
 		text: str(round(root.price,2))
+		font_name: app.fonts.body
+		color: app.color_primary_text
+		font_size:app.fonts.size.h3
+		halign: "right"
+		size_hint_x: .25
+	Text:
+		text: str(round(root.price,2)*root.qty)
 		font_name: app.fonts.body
 		color: app.color_primary_text
 		font_size:app.fonts.size.h3

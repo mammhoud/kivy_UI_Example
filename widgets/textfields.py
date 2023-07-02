@@ -21,28 +21,28 @@ Builder.load_string("""
     height: dp(42)
     spacing: dp(8)
     padding:[dp(12),0]
-    #bcolor:app.color_primary_bg
+    #color: rgba("#ffffff")
     canvas.before:
         Color: 
-            rgba: app.color_tertiary
+            rgba: rgba("#afaa22")
         Rectangle:
             pos: self.pos
             size: self.size
     Text:
         text: str(root.pcode) #catched error !
-        color: app.color_secondary_text
+        color: rgba("#ffffff")
         font_size: app.fonts.size.h4
         font_name: app.fonts.body
         size_hint_x: .3
     Text:
         text: str(root.name)
-        color: app.color_secondary_text
+        color: rgba("#ffffff")
         font_size: app.fonts.size.h4
         font_name: app.fonts.body
         size_hint_x: .3
     Text:
         text: "$%s"%str(round(root.price,2))
-        color: app.color_secondary_text
+        color: rgba("#ffffff")
         font_size: app.fonts.size.h4
         font_name: app.fonts.body
         size_hint_x: .2

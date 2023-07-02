@@ -26,7 +26,7 @@ class Pos(BoxLayout):
             prod= { 
                    "name": f"Product #0{x}",
                    "pcode": str(x).zfill(8),
-                   "price": randint(2, 25),
+                   "price": randint(30000, 300000),
                    "qty": 1}
             prods.append(prod)
             #print(prods)

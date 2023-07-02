@@ -4,6 +4,8 @@ from kivy.uix.dropdown import DropDown
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.button import Button
+from kivy.clock import Clock, mainthread
+
 from kivy.graphics import Color, RoundedRectangle, Line
 from kivy.properties import ColorProperty, ListProperty, ObjectProperty, StringProperty,NumericProperty
 from kivy.core.window import Window
@@ -19,26 +21,27 @@ Builder.load_string("""
     height: dp(42)
     spacing: dp(8)
     padding:[dp(12),0]
+    #bcolor:app.color_primary_bg
     canvas.before:
         Color: 
-            rgba: app.color_primary_bg
+            rgba: app.color_tertiary
         Rectangle:
             pos: self.pos
             size: self.size
     Text:
-        text: root.pcode
+        text: str(root.pcode) #catched error !
         color: app.color_secondary_text
         font_size: app.fonts.size.h4
         font_name: app.fonts.body
         size_hint_x: .3
     Text:
-        text: root.name
+        text: str(root.name)
         color: app.color_secondary_text
         font_size: app.fonts.size.h4
         font_name: app.fonts.body
         size_hint_x: .3
     Text:
-        text: "$%s"%round(root.price,2)
+        text: "$%s"%str(round(root.price,2))
         color: app.color_secondary_text
         font_size: app.fonts.size.h4
         font_name: app.fonts.body
@@ -165,8 +168,8 @@ class SearchBar(FlatField):
     
     def show_suggestions(self, suggestion: str):
             try:
-                self.choices.clear()####
                 suggestions = self.get_suggestions(suggestion)
+                self.choices.clear()####
                 self.choices= suggestions
             except Exception as e:
                 print(e+ "show_suggestions")
@@ -179,29 +182,33 @@ class SearchBar(FlatField):
             self.dropdown.autowidth= False
             self.dropdown.size_hint_x = None
             self.dropdown.width = Window.width*.4
-            
+            print("#######################################")
+
             x:int = 0
-            
+            print(self.choices)
+            print("#######################################")
             for c in self.choices:
-                b= Button()
+                #b= Button()
                 b= SuggestionWidget()
-                if self.suggestion_widget:
-                    b=self.suggesion_widge()
+                #if self.suggestion_widget:
+                 #   b=self.suggesion_widge()
                 b.name = c['name']
                 b.pcode= c['pcode']
                 b.price= c['price']
                 b.size_hint_y = None
                 b.height = dp(54)
+                #b.height = dp(54)
+                b.width= self.width
                 b.bind(on_release= self.suggest)
-                
-                self.dropdown.add_width(b)
+
+                self.dropdown.add_widget(b)
                 
                 x+= 1
                 
             if x> 0:
                 self.dropdown.open(self)
         except Exception as e:
-            print(e,"on_choices")
+            print(e,"on_choices file")
     def suggest(self,inst):
         if self.callback:
             self.callback(inst)
@@ -224,14 +231,17 @@ class SearchBar(FlatField):
             #prods.append(prod)
         return prods 
         
-                        
+    def close_dropdowns(self):
+        if self.dropdown:
+            self.dropdown.dismiss()
+            self.dropdown = None             
     def open_dropdown(self, *args):
         if self.dropdown:
             self.dropdown.open(self)
         
-        if self.dropdown:
-            self.dropdown.dismiss()
-            self.dropdown = None
+        #if self.dropdown:
+        #    self.dropdown.dismiss()
+        #    self.dropdown = None
             
 class SuggestionWidget(ButtonBehavior, BoxLayout):
     pcode= StringProperty(0)

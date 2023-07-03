@@ -1,0 +1,150 @@
+<Users>:
+	orientation: 'vertical'
+	padding: dp(12)
+	BoxLayout:
+		size_hint_y: None
+		height: dp(54)
+		BoxLayout:
+		BackBox:
+			radius: [self.height*.45]
+			padding: [dp(12),0]
+			bcolor: app.color_primary
+			size_hint_x: .1
+			RelativeLayout:
+				AnchorLayout:
+					anchor_x: "right"
+					Text: 
+						text: icon("icon-plus")
+						color: [1,1,1,1]
+						halign: "right"
+						size_hint_x: None
+						width: self.height
+				AnchorLayout:
+					anchor_x: "left"
+					RoundedButton:
+						text: "add New"
+						bcolor: app.color_primary 
+						radius: [self.height*.4]
+
+						halign: "left"
+						color: [1,1,1,1]
+						font_size: self.width* .21
+						size_hint_x: .8
+
+	BoxLayout:
+		id: bx_table
+		orientation: "vertical"
+		#padding: dp[0, dp(16),0,0]
+		BackBox:
+			size_hint_y: None
+			height: dp(42)
+			bcolor: app.color_primary_bg
+			spacing: dp(12)
+			padding: [dp(12), 0]
+			Text:
+				text: "First Name"
+				color: app.color_primary_text
+				font_size: app.fonts.size.h3
+				size_hint_x: .15
+
+			Text:
+				text: "Last Name"
+				color: app.color_primary_text
+				font_size: app.fonts.size.h3
+				size_hint_x: .15
+
+			Text:
+				text: "Username"
+				color: app.color_primary_text
+				font_size: app.fonts.size.h3
+				size_hint_x: .15
+
+			Text:
+				text: "Password[size=14](encrypted)[/size]"
+				color: app.color_primary_text
+				font_size: app.fonts.size.h3
+				size_hint_x: .25
+
+			Text:
+				text: "Role"
+				color: app.color_primary_text
+				font_size: app.fonts.size.h3
+				size_hint_x: .15
+
+			Text:
+				text: "Email"
+				color: app.color_primary_text
+				font_size: app.fonts.size.h3
+				size_hint_x: .15
+
+			Text:
+				text: "Last_Login"
+				color: app.color_primary_text
+				font_size: app.fonts.size.h3
+				size_hint_x: .15
+
+		BoxLayout:
+			ScrollView:
+				do_scroll:[False, True]
+				size_hint_x:None
+				halign: self.parent.height
+				GridLayout:
+					id: g1_users
+					cols: 1
+					spacing: dp(8)
+					size_hint_y: None
+					halign: self.minimum_height
+
+<UserTIle>:
+	size_hint_y: None
+	height: dp(42)
+	spacing: dp(12)
+	padding: [dp(12), 0]
+	canvas.before:
+		Color:
+			rgba: app.color_secondary_pg
+		Rectangle:
+			pos: self.pos
+			size: [self.size(0), dp(1)]
+	Text:
+		text: root.first_name
+		color: app.color_primary_text
+		font_size: app.fonts.size.h3
+		size_hint_x: .15
+
+	Text:
+		text: root.last_name
+		color: app.color_primary_text
+		font_size: app.fonts.size.h3
+		size_hint_x: .15
+
+	Text:
+		text: root.username
+		color: app.color_primary_text
+		font_size: app.fonts.size.h3
+		size_hint_x: .15
+
+	Text:
+		text: root.password
+		color: app.color_primary_text
+		font_size: app.fonts.size.h3
+		size_hint_x: .25
+
+	Text:
+		text: root.role
+		color: app.color_primary_text
+		font_size: app.fonts.size.h3
+		size_hint_x: .15
+
+	Text:
+		text: root.email
+		color: app.color_primary_text
+		font_size: app.fonts.size.h3
+		size_hint_x: .15
+
+	Text:
+		text: root.last_login
+		color: app.color_primary_text
+		font_size: app.fonts.size.h3
+		size_hint_x: .15
+

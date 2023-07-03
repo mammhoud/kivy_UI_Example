@@ -15,7 +15,7 @@ class Pos(BoxLayout):
     current_total = NumericProperty(0.0)
     current_cart = ListProperty([])
     def __init__(self, **kw):
-        
+    
         super().__init__(**kw)
         Clock.schedule_once(self.render, .1)
 

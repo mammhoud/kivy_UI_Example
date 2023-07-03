@@ -15,6 +15,7 @@ from random import randint
 Builder.load_string("""
 <FlatField>:
     padding: [dp(6), (self.height - self.line_height)/2]
+    
 <SuggestionWidget>:    
     BackBox:
         
@@ -82,6 +83,7 @@ class FlatField(TextInput):
         self.background_color = [0,0,0,0]
         self.write_tab = False
 
+
 class TextField(FlatField):
     bcolor = ColorProperty([0,0,0,1])
     main_color = ColorProperty([1,1,1,1])
@@ -101,7 +103,7 @@ class TextField(FlatField):
 
         self.bind(size=self.update)
         self.bind(pos=self.update)
-
+        
     def on_main_color(self, inst, value):
         self.back_color.rgba = value
 

@@ -89,6 +89,7 @@
 						radius: [self.height*.1]
 						padding: [dp(12), dp(2)]
 						FlatField:
+							id: user_input
 							hint_text: "Username"
 							hint_text_color: app.color_primary_text
 							font_size: app.fonts.size.h2
@@ -100,6 +101,7 @@
 						radius: [self.height*.1]
 						padding: [dp(12), dp(2)]
 						FlatField:
+							id: password_input
 							hint_text: "Password"
 							hint_text_color: app.color_primary_text
 							font_size: app.fonts.size.h2
@@ -111,13 +113,15 @@
 						size_hint_y: None
 						height: dp(64)
 						RoundedButton:
+							id: login_button
 							text: "Sign"
 							#hint_text_color: app.color_primary_text
 							font_name: app.fonts.heading
 							font_size: app.fonts.size.h1
 							bcolor: app.color_primary
 							radius: [self.height*.1]
-							on_release: root.authenticate()
+							on_release: root.authenticate(user_input.text, password_input.text)
+							
 					BackBox:
 						size_hint_y: None
 						height: dp(64)
@@ -125,6 +129,8 @@
 							text: "Don't have an account !?"
 							#hint_text_color: app.color_primary_text
 							font_name: app.fonts.subheading
+							bcolor: app.color_tertiary
+
 							font_size: app.fonts.size.h3
 							color: app.color_primary_text
 							radius: [self.height*.1]
@@ -145,5 +151,51 @@
 				orientation: 'vertical'
 
 
+<AuthSign>:
+	background: ""
+	background_color: [0,0,0,.21]
+	BackBox:
+		orientation: "vertical"
+		spacing: dp(12)
+		padding: dp(14)
+		bcolor: app.color_primary_bg
+		radius: [self.height*.08]
+		size_hint: [None, .7]
+		width: self.height
+		BoxLayout:
+			size_hint_y: .6
+			orientation: 'vertical'
+			Text:
+				text: "Checkout"
+				font_name: app.fonts.styled
+				font_size: app.fonts.size.extra
+				color:app.color_primary_text
+				halign: 'center'
+			Text:
+				text: "are you sure, complete the signin with ???" #todo: and a name of the user  
+				halign: 'center'
+				font_size: app.fonts.size.h2
+				color:app.color_primary_text
+		AnchorLayout:
+			BoxLayout:
+				size_hint_y: .4
+				spacing: dp(12)
+				size_hint_y: .6
+				height: dp(128)
+				FlatButton:
+					text: "cancel"
+					font_size: app.fonts.size.h2
+					color: app.color_tertiary
+					on_release: root.dismiss()
+					bcolor: app.color_secondary_bg
+					#size_hint_y: None
+				RoundedButton:
+					text: "yes complete?"
+					font_size: app.fonts.size.h2
+					bcolor: app.color_primary
+					color: app.color_secondary_text #rgba("#ffffff")
+					radius: [self.height*.1]
+					on_release: root.complete()
+				#Divider:
 
 		

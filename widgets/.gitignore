@@ -6,4 +6,5 @@
 *.html~
 *.htm~
 *.css~
+!.gitignore
 *.profile

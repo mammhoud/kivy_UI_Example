@@ -1,11 +1,5 @@
 *.pyc
 *.swp
-*.py~
-*.zip
-*.rar
-*.html~
-*.htm~
-*.css~
 !.gitignore
 *.profile
 __pycache__

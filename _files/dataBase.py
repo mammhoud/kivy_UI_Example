@@ -12,9 +12,10 @@ class Database:
         self.cursor.execute(query)
         results = self.cursor.fetchall()
         return results
-    def jiont(self, t1,t2,id)
-        return(select_data(f"{t1}, {t2}",f"as {t2}_Name {t1} as t1 join {t2} as t2 WHERE t2.id = t1.{t2}_id",True))
         
+    def fetch_join(self, t1,t2)
+        return(select_data(f"{t1}, {t2}",f"as {t2}_Name {t1} as t1 join {t2} as t2 WHERE t2.id = t1.{t2}_id",fetchall=True)
+        #############################################################################################################
     def get_data_from_csv(self, csv_file_name):
         with open(csv_file_name, 'r') as csvfile:
             csvreader = csv.reader(csvfile, delimiter=',')

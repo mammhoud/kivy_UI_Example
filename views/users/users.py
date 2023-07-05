@@ -33,28 +33,8 @@ class Users(BoxLayout):
                 "signedIn":"",
                 "roles":"admin",
                 "email": "mail@mail.com"
-            },
-            {
-                "firstName": "fist1",
-                "lastName": "last1",
-                "username": "user1",
-                "password": "123",
-                "createdAt": "",
-                "signedIn":"",
-                "roles":"admin",
-                "email": "mail@mail.com"
-         
-            },{
-                "firstName": "fist2",
-                "lastName": "last2",
-                "username": "user2",
-                "password": "123",
-                "createdAt": "",
-                "signedIn":"",
-                "roles":"admin",
-                "email": "mail@mail.com"
-            },
-        ]
+            },       
+            ]
         self.set_users(users)
         
     @mainthread

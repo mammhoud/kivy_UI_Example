@@ -51,9 +51,3 @@ LICENSE
 =======
 
 MIT (except sample font that I got from http://fontello.com)
-
-
-Credits
-=======
-
-Author: Jeyson Molina <jeyson.mco@gmail.com>

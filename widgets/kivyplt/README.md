@@ -72,7 +72,3 @@ Requirements
 
 - Kivy (>1.8)
 - Matplotlib (>1.4)
-
-Credits
-=======
-Jeyson Molina (jeyson.mco at gmail.com)

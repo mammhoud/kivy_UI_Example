@@ -8,13 +8,13 @@ from kivy.utils import rgba, QueryDict
 from kivy.clock import Clock, mainthread
 from kivy.properties import StringProperty, ListProperty, ColorProperty, NumericProperty, ObjectProperty
 from threading import Thread
+from _files.dataBase import Database
 
 Builder.load_file("views/users/users.kv")
-
-
 class Users(BoxLayout):
+    users = []
     
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
         Clock.schedule_once(self.render, .1)
 
@@ -23,36 +23,37 @@ class Users(BoxLayout):
         t1.start()
         
     def get_users(self):
+        data = Database()
+        users = data.select_data("user", fetchall= True)
+        '''        
         users = [
             {
-                "firstName": "fist",
-                "lastName": "last",
-                "username": "user",
-                "password": "123",
-                "createdAt": "",
-                "signedIn":"",
-                "roles":"admin",
-                "email": "mail@mail.com"
-            },       
-            ]
+                1: "firstName",
+                2: "lastName",
+                3: "userName",
+                3: "*******",
+                4: "createdAt",#####
+                5:"signedIn",#####
+                6:"role",
+                7: "Email"
+            },    
+            ]'''
         self.set_users(users)
         
     @mainthread
     def set_users(self, users:list):
-        grid = self.ids.g1_users
-        grid.clear_widgets()
-        
+        self.ids.g1_users.clear_widgets()
+        print(users)
         for u in users:
             ut = UserTile()
-            ut.firstName = u["firstName"]
-            ut.lastName = u["lastName"]
-            ut.usename = u["username"]
-            ut.password = u["password"]
-            ut.createdAt = u["createdAt"]
-            ut.signedIn = u["signedIn"]
-            ut.roles = u["roles"]
-            ut.email = u["email"]
-            grid.add_widget(ut)
+            ut.firstName = u[1]
+            ut.lastName = u[2]
+            ut.username = u[3]
+            ut.password = u[4]
+            ut.roles = u[5]
+            ut.email = u[6]
+            
+            self.ids.g1_users.add_widget(ut)
 
 
         
@@ -70,5 +71,9 @@ class UserTile(BoxLayout):
     roles = StringProperty("")
     email = StringProperty("")
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
+        Clock.schedule_once(self.render, .1)
+
+    def render(self, _):
+        pass

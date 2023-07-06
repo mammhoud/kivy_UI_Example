@@ -35,7 +35,6 @@
 		id: bx_table
 		orientation: "vertical"
 		padding: [0, dp(16),0,0]
-		width: self.height
 		BackBox:
 			size_hint_y: None
 			height: dp(42)
@@ -88,13 +87,11 @@
 				color: app.color_primary_text
 				font_size: app.fonts.size.h3
 				size_hint_x: .15
-
-			
 		BoxLayout:
 			ScrollView:
-				do_scroll:[False, True]
-				size_hint_x:None
-				halign: self.parent.height
+				do_scroll: [False, True]
+				size_hint_y: None
+				height: self.parent.height
 				GridLayout:
 					id: g1_users
 					cols: 1
@@ -104,19 +101,13 @@
 
 
 
-<ModUser>:
-	AnchorLayout:
-		anchor_x: 'top'	
-		orientation: "vertical"
-		background: ""
-		width: self.width * .3
 <UserTile>:
 	size_hint_y: None
 	height: dp(42)
-	bcolor: app.color_secondary_bg
+	#bcolor: app.color_secondary_bg
 	spacing: dp(12)
-	padding: [dp(12), 1]
-	canvas.after:
+	padding: [dp(12), 0]
+	canvas.before:
 		Color:
 			rgba: app.color_tertiary
 		Rectangle:

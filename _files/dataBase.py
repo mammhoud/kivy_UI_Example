@@ -5,8 +5,8 @@ import csv
 class Database:
     path = './_files/'
     dbName = 'store.db'
-    def __init__(self, database_name= path+dbName):
-        self.connection = sqlite3.connect(database_name)
+    def __init__(self):
+        self.connection = sqlite3.connect(self.path+self.dbName)
         self.cursor = self.connection.cursor()
 
     def fetch_query(self, query):
@@ -16,9 +16,9 @@ class Database:
         
     def fetch_join(self, t1,t2):
         return(select_data(f"{t1}, {t2}",f"as {t2}_Name {t1} as t1 join {t2} as t2 WHERE t2.id = t1.{t2}_id",fetchall=True))
-        #############################################################################################################
+        #############################################################################################################   
     def get_data_from_csv(self, csv_file_name):
-        with open('./_files/'+csv_file_name, 'r') as csvfile:
+        with open(self.path+csv_file_name, 'r') as csvfile:
             csvreader = csv.reader(csvfile, delimiter=',')
             data = []
             for row in csvreader:
@@ -76,17 +76,17 @@ class Database:
 
 
     def db_SP(self):
-        self.create_table("category", "id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL,description TEXT,category TEXT")
-        self.create_table("user", "id INTEGER PRIMARY KEY AUTOINCREMENT,firstname TEXT NOT NULL,lastname TEXT NOT NULL,username TEXT UNIQUE NOT NULL, email TEXT,password TEXT NOT NULL, role TEXT NOT NULL")
+        self.create_table("category", "id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL,description TEXT")
+        self.create_table("user", "id INTEGER PRIMARY KEY AUTOINCREMENT,firstName TEXT NOT NULL,lastName TEXT NOT NULL,username TEXT UNIQUE NOT NULL, email TEXT,password TEXT NOT NULL,createdAt Date DEFAULT CURRENT_DATE,signedIn Date DEFAULT CURRENT_DATE, role TEXT NOT NULL")
         self.create_table("customer", "id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL,email TEXT UNIQUE,address TEXT,phone TEXT")
-        self.create_table("'order'", "id INTEGER PRIMARY KEY AUTOINCREMENT,date TEXT NOT NULL,amount REAL NOT NULL,status TEXT NOT NULL,customer_id INTEGER NOT NULL,FOREIGN KEY (customer_id) REFERENCES customer (id)")
+        self.create_table("'order'", "id INTEGER PRIMARY KEY AUTOINCREMENT,date DATE ,amount REAL NOT NULL,status TEXT NOT NULL,customer_id INTEGER NOT NULL,FOREIGN KEY (customer_id) REFERENCES customer (id)")
         self.create_table("product", "id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL,price REAL NOT NULL,description TEXT,category_id INTEGER NOT NULL,FOREIGN KEY (category_id) REFERENCES categories (id)")
         self.create_table("material", "id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL,quantity INTEGER NOT NULL,cost REAL NOT NULL")
         self.create_table("shift", "id INTEGER PRIMARY KEY AUTOINCREMENT,user_id INTEGER NOT NULL,date DATE,start_time TIME,end_time TIME,FOREIGN KEY (user_id) REFERENCES users (id)")
         self.create_table("order_detail", "order_id INTEGER NOT NULL,product_id INTEGER NOT NULL,quantity INTEGER NOT NULL,price REAL NOT NULL,PRIMARY KEY (order_id, product_id),FOREIGN KEY (order_id) REFERENCES orders (id),FOREIGN KEY (product_id) REFERENCES products (id)")
         '''users = [
             
-            {
+            {date
                 1: "firstName",
                 2: "lastName",
                 3: "userName",
@@ -135,9 +135,9 @@ class Database:
 if __name__ == "__main__":
 
     database = Database()
-    database.db_SP()
-    database.insert_fromCSV('user')
-    results = database.select_data("user")
+    #database.db_SP()
+    database.insert_fromCSV('category')
+    results = database.select_data("category")
     for row in results:
         print(row)
     database.connection.commit()

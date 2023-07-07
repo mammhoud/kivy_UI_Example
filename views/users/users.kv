@@ -25,7 +25,7 @@
 						text: "add New"
 						bcolor: app.color_primary 
 						radius: [self.height*.4]
-						#on_release: root.add_new()
+						on_release: root.add_new()
 						halign: "left"
 						color: [1,1,1,1]
 						font_size: self.width* .21
@@ -162,3 +162,128 @@
 		color: app.color_primary_text
 		font_size:app.fonts.size.h3
 		size_hint_x: .15
+
+
+
+<ModUser>:
+	background:""
+	background_color: [0,0,0,.1]
+	AnchorLayout:
+		anchor_x: "right"
+		BackBox:
+			orientation:'vertical'
+			spacing: dp(12)
+			bcolor: app.color_primary_bg
+			size_hint_x: .3
+			AnchorLayout:
+				anchor_x: "left"
+				size_hint_y:None
+				height: dp(42)
+				FlatButton:
+					text: icon("icon-x")
+					size_hint_x: None
+					color: app.color_tertiary
+					font_size: app.fonts.size.h1
+					width: self.height
+					on_release: root.dismiss()
+
+			BoxLayout:
+				orientation: "vertical"
+				spacing: dp(12)
+				size_hint_y: .3
+				Text:
+					id: title
+					text: "Add User"
+					font_name: app.fonts.styled
+					font_size: app.fonts.size.extra
+					color: app.color_primary_text
+					halign: 'center'
+					valign: 'bottom'
+				AnchorLayout:
+					anchor_y: "top"
+					Label:
+						id: subtitle
+						text: 'Enter your new user Details to sign up'
+						text_size: [self.parent.width, None]
+						font_name: app.fonts.subheading
+						font_size: app.fonts.size.h3
+						size: self.texture_size
+						color: app.color_secondary_text
+						halign: 'center'
+						valign: 'top'
+						size_hint_y: None
+				
+			
+			AnchorLayout:
+				size_hint_y: .8	
+				BoxLayout:
+					orientation: 'vertical'
+					spacing: dp(24)
+					padding: [dp(12), dp(12), dp(12), dp(24)]
+					BackBox:
+						size_hint_y: None
+						height: dp(64)
+						bcolor: app.color_secondary_bg
+						radius: [self.height*.1]
+						padding: [dp(12), dp(2)]
+						FlatField:
+							id: firstName
+							hint_text: "First Name"
+							hint_text_color: app.color_primary_text
+							font_size: app.fonts.size.h2
+							multiline: False
+					BackBox:
+						size_hint_y: None
+						height: dp(64)
+						bcolor: app.color_secondary_bg
+						radius: [self.height*.1]
+						padding: [dp(12), dp(2)]
+						FlatField:
+							id: lastName
+							hint_text: "Last Name"
+							hint_text_color: app.color_primary_text
+							font_size: app.fonts.size.h2
+							multiline: False
+
+					BackBox:
+						size_hint_y: None
+						height: dp(64)
+						bcolor: app.color_secondary_bg
+						radius: [self.height*.1]
+						padding: [dp(12), dp(2)]
+						FlatField:
+							id: username
+							hint_text: "Username"
+							hint_text_color: app.color_primary_text
+							font_size: app.fonts.size.h2
+							multiline: False
+
+					BackBox:
+						size_hint_y: None
+						height: dp(64)
+						bcolor: app.color_secondary_bg
+						radius: [self.height*.1]
+						padding: [dp(12), dp(2)]
+						FlatField:
+							id: password
+							hint_text: "Password"
+							hint_text_color: app.color_primary_text
+							font_size: app.fonts.size.h2
+							multiline: False
+							password: True
+					Widget:
+
+					BackBox:
+						size_hint_y: None
+						height: dp(64)
+						RoundedButton:
+							id: btn_confirm
+							text: "Add"
+							#hint_text_color: app.color_primary_text
+							font_name: app.fonts.heading
+							font_size: app.fonts.size.h1
+							bcolor: app.color_primary
+							radius: [self.height*.1]
+							on_release: 
+								root.callback(root)
+								root.dismiss()

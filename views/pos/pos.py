@@ -21,15 +21,24 @@ class Pos(BoxLayout):
 
     def render(self, _):
         prods = []
-        
-        for x in range(100):
+        cats= []
+        #todo select the data from the database using the implemented method
+        for x in range(20):
             prod= { 
-                   "name": f"Product #0{x}",
-                   "pcode": str(x).zfill(8),
-                   "price": randint(30000, 300000),
+                   "sug2": f"Product #0{x}",
+                   "sug1": str(x).zfill(8),
+                   "sug3": randint(1, 303),
                    "qty": 1}
             prods.append(prod)
-        self.ids.ti_search.products = prods
+        self.ids.ti_search.sugData = prods
+        for x in range(20):
+            cat= { 
+                   "sug2": f"category #0{x}",
+                   "sug1": str(x).zfill(8),
+                   "sug3": randint(1, 303),
+                   }
+            cats.append(cat)
+        self.ids.ti_search1.sugData = cats
 
         
     def qty_control(self, tile, increasing=False):
@@ -39,7 +48,7 @@ class Pos(BoxLayout):
         else:
             _qty -= 1
             if _qty < 0: 
-                # to:do => {ask} delete or not delete if the minus clicked
+                # todo => {ask} delete or not delete if the minus clicked
                 _qty = 0
         data = { 
         "name": tile.name,
@@ -64,15 +73,19 @@ class Pos(BoxLayout):
         #tile.qty = _qty
     
     
-    
+    def add_cat(self,inst):
+        data = { 
+                "cat_name": inst.sug2,
+                "cat_id": inst.sug1,
+                "cat_des": inst.sug3}        
     
     def add_product(self,inst):
         data = { 
-                "name": inst.name,
-                "pcode": inst.pcode,
-                "price": inst.price,
+                "name": inst.sug2,
+                "pcode": inst.sug1,
+                "price": inst.sug3,
                 "qty": 1}
-        tmp = list(filter(lambda x: x["pcode"]==inst.pcode, self.current_cart))
+        tmp = list(filter(lambda x: x["pcode"]==inst.sug1, self.current_cart))
        
         if len(tmp)>0:
             #update qty 
@@ -141,7 +154,7 @@ class Pos(BoxLayout):
 
        
 class ProductTile(BoxLayout):
-    pcode = StringProperty("")
+    pcode = NumericProperty(0)
     name = StringProperty("")
     qty = NumericProperty(0)    
     price = NumericProperty(0)
@@ -154,7 +167,7 @@ class ProductTile(BoxLayout):
     
 
 class ReceiptItem(BoxLayout):
-    pcode = StringProperty("")
+    pcode = NumericProperty(0)
     name = StringProperty("")
     qty = NumericProperty(0)    
     price = NumericProperty(0)

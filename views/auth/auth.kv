@@ -73,55 +73,53 @@
 					halign: 'center'
 					valign: 'top'
 					size_hint_y: None
-			
-			
-			AnchorLayout:
-				size_hint_y: .5		
-				BoxLayout:
-					orientation: 'vertical'
-					spacing: dp(24)
-					padding: dp(24)
-					size_hint_x: .7
-					BackBox:
-						size_hint_y: None
-						height: dp(64)
-						bcolor: app.color_secondary_bg
-						radius: [self.height*.1]
-						padding: [dp(12), dp(2)]
-						FlatField:
-							id: user_input
-							hint_text: "Username"
-							hint_text_color: app.color_primary_text
-							font_size: app.fonts.size.h2
-							multiline: False
-					BackBox:
-						size_hint_y: None
-						height: dp(64)
-						bcolor: app.color_secondary_bg
-						radius: [self.height*.1]
-						padding: [dp(12), dp(2)]
-						FlatField:
-							id: password_input
-							hint_text: "Password"
-							hint_text_color: app.color_primary_text
-							font_size: app.fonts.size.h2
-							password: True
-							multiline: False
+		AnchorLayout:
+			size_hint_y: .5		
+			BoxLayout:
+				orientation: 'vertical'
+				spacing: dp(24)
+				padding: dp(24)
+				size_hint_x: .7
+				BackBox:
+					size_hint_y: None
+					height: dp(64)
+					bcolor: app.color_secondary_bg
+					radius: [self.height*.1]
+					padding: [dp(12), dp(2)]
+					FlatField:
+						id: user_input
+						hint_text: "Username"
+						hint_text_color: app.color_primary_text
+						font_size: app.fonts.size.h2
+						multiline: False
+				BackBox:
+					size_hint_y: None
+					height: dp(64)
+					bcolor: app.color_secondary_bg
+					radius: [self.height*.1]
+					padding: [dp(12), dp(2)]
+					FlatField:
+						id: password_input
+						hint_text: "Password"
+						hint_text_color: app.color_primary_text
+						font_size: app.fonts.size.h2
+						password: True
+						multiline: False
 
 
-					BackBox:
-						size_hint_y: None
-						height: dp(64)
-						RoundedButton:
-							id: login_button
-							text: "Sign"
-							#hint_text_color: app.color_primary_text
-							font_name: app.fonts.heading
-							font_size: app.fonts.size.h1
-							bcolor: app.color_primary
-							radius: [self.height*.1]
-							on_release: root.authenticate(user_input.text, password_input.text)
-							
+				BackBox:
+					size_hint_y: None
+					height: dp(64)
+					RoundedButton:
+						id: login_button
+						text: "Sign"
+						#hint_text_color: app.color_primary_text
+						font_name: app.fonts.heading
+						font_size: app.fonts.size.h1
+						bcolor: app.color_primary
+						radius: [self.height*.1]
+						on_release: root.authenticate(user_input.text, password_input.text)
+						
 					BackBox:
 						size_hint_y: None
 						height: dp(64)
@@ -135,15 +133,15 @@
 							color: app.color_primary_text
 							radius: [self.height*.1]
 					Widget:
-			AnchorLayout:
-				size_hint_y: .2
-				padding: dp(24)
-				Text:
-					text: "v.1"
-					font_size: app.fonts.size.h3
-					valign: "bottom"
-					halign: "center"
-					color: app.color_primary_text				
+				AnchorLayout:
+					size_hint_y: .2
+					padding: dp(24)
+					Text:
+						text: "V 0.1.0"
+						font_size: app.fonts.size.h3
+						valign: "bottom"
+						halign: "center"
+						color: app.color_primary_text				
 			BoxLayout:
 				size_hint_y: .2
 				orientation: 'vertical'

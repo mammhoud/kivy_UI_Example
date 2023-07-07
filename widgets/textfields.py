@@ -18,7 +18,6 @@ Builder.load_string("""
     
 <SuggestionWidget>:    
     BackBox:
-        
     	bcolor: app.color_secondary_text
         canvas.before:
             Color: 
@@ -27,7 +26,7 @@ Builder.load_string("""
                 pos: self.pos
                 size: [self.size[0], dp(2)]
         Image: 
-            source: 'assets/imgs/back.png'#to:do add the image secuance for the app/products
+            source: 'assets/imgs/back.png' #todo add the image secuance for the app/products
             height: dp(24)
             size_hint_x: None
             width: self.height
@@ -55,19 +54,19 @@ Builder.load_string("""
                         pos: self.pos
                         size: [self.size[0], dp(2)]
                 Text:
-                    text: str(root.pcode) #catched error !
+                    text: str(int(root.sug1)) #catched error !
                     color: app.color_primary_text
                     font_size: app.fonts.size.h4
                     font_name: app.fonts.body
                     size_hint_x: .3
                 Text:
-                    text: str(root.name)
+                    text: str(root.sug2)
                     color: app.color_primary_text
                     font_size: app.fonts.size.h4
                     font_name: app.fonts.body
                     size_hint_x: .3
                 Text:
-                    text: "$%s"%str(round(root.price,2))
+                    text: "$%s"%str(round(root.sug3,2))
                     color: app.color_primary_text
                     font_size: app.fonts.size.h4
                     font_name: app.fonts.body
@@ -160,7 +159,7 @@ class OutlineTextField(FlatField):
 
 class SearchBar(FlatField):
     choices = ListProperty([])
-    products = ListProperty([])
+    sugData = ListProperty([])
 
     suggestion_widget= ObjectProperty(allownone=True)
     callback= ObjectProperty(alownone=True)
@@ -213,9 +212,9 @@ class SearchBar(FlatField):
                 b= SuggestionWidget()
                 #if self.suggestion_widget:
                  #   b=self.suggesion_widge()
-                b.name = c['name']
-                b.pcode= c['pcode']
-                b.price= c['price']
+                b.sug2 = c['sug2']
+                b.sug1= c['sug1']
+                b.sug3= c['sug3']
                 b.size_hint_y = None
                 b.height = dp(54)
                 #b.height = dp(54)
@@ -239,17 +238,17 @@ class SearchBar(FlatField):
             
         
     def get_suggestions(self, suggestion):
-        prods = self.products 
+        data = self.sugData 
       #  for x in range(4):
-        #    pcode = randint(1,2)
+        #    sug1 = randint(1,2)
          #   prod= {  
-         #       "name": f"Product {x}",
+         #       "sug2": f"Product {x}",
           #      "qty": 1,
-           #     "price": 400,
-           #     "pcode": str(pcode).zfill(8)
+           #     "sug3": 400,
+           #     "sug1": str(sug1).zfill(8)
            # } 
             #prods.append(prod)
-        return prods 
+        return data 
         
     def close_dropdowns(self):
         if self.dropdown:
@@ -264,6 +263,6 @@ class SearchBar(FlatField):
         #    self.dropdown = None
             
 class SuggestionWidget(ButtonBehavior, BoxLayout):
-    pcode= StringProperty(0)
-    name= StringProperty("")    
-    price= NumericProperty(0)
+    sug1= NumericProperty(0)
+    sug2= StringProperty("")    
+    sug3= NumericProperty(0)

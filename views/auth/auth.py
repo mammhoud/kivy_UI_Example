@@ -50,7 +50,7 @@ class Auth(BoxLayout):
         # Connect to the SQLite database file
         db = Database()
 
-        row = db.select_data(table_name='users',where_clause=f"WHERE username = '{username}' AND password = '{password}'",fetchall=False)
+        row = db.select_data(table_name='user',where_clause=f"WHERE username = '{username}' AND password = '{password}'",fetchall=False)
         db.close_connection()
         # Query the database for matching username and password
 

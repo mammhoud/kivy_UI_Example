@@ -87,6 +87,10 @@
 				color: app.color_primary_text
 				font_size: app.fonts.size.h3
 				size_hint_x: .15
+				
+			BoxLayout:
+				size_hint_x: None
+				width: self.height
 		BoxLayout:
 			ScrollView:
 				do_scroll: [False, True]
@@ -162,7 +166,13 @@
 		color: app.color_primary_text
 		font_size:app.fonts.size.h3
 		size_hint_x: .15
-
+		
+	FlatButton:
+		text: icon('icon-trash')
+		size_hint_x: None
+		width: self.height
+		color: app.color_tertiary
+		on_release: root.delete_user()
 
 
 <ModUser>:
@@ -185,8 +195,8 @@
 					color: app.color_tertiary
 					font_size: app.fonts.size.h1
 					width: self.height
-					on_release: root.dismiss()
-
+					on_release: 
+						root.dismiss()
 			BoxLayout:
 				orientation: "vertical"
 				spacing: dp(12)
@@ -208,7 +218,7 @@
 						font_name: app.fonts.subheading
 						font_size: app.fonts.size.h3
 						size: self.texture_size
-						color: app.color_secondary_text
+						color: app.color_tertiary
 						halign: 'center'
 						valign: 'top'
 						size_hint_y: None
@@ -227,7 +237,7 @@
 						radius: [self.height*.1]
 						padding: [dp(12), dp(2)]
 						FlatField:
-							id: firstName
+							id: firstName_input
 							hint_text: "First Name"
 							hint_text_color: app.color_primary_text
 							font_size: app.fonts.size.h2
@@ -239,7 +249,7 @@
 						radius: [self.height*.1]
 						padding: [dp(12), dp(2)]
 						FlatField:
-							id: lastName
+							id: lastName_input
 							hint_text: "Last Name"
 							hint_text_color: app.color_primary_text
 							font_size: app.fonts.size.h2
@@ -252,7 +262,7 @@
 						radius: [self.height*.1]
 						padding: [dp(12), dp(2)]
 						FlatField:
-							id: username
+							id: username_input
 							hint_text: "Username"
 							hint_text_color: app.color_primary_text
 							font_size: app.fonts.size.h2
@@ -265,14 +275,13 @@
 						radius: [self.height*.1]
 						padding: [dp(12), dp(2)]
 						FlatField:
-							id: password
+							id: password_input
 							hint_text: "Password"
 							hint_text_color: app.color_primary_text
 							font_size: app.fonts.size.h2
 							multiline: False
 							password: True
 					Widget:
-
 					BackBox:
 						size_hint_y: None
 						height: dp(64)
@@ -287,3 +296,5 @@
 							on_release: 
 								root.callback(root)
 								root.dismiss()
+
+

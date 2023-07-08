@@ -4,20 +4,23 @@ from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.modalview import ModalView
+import hashlib
 from kivy.metrics import dp, sp
 from kivy.utils import rgba, QueryDict
 from kivy.clock import Clock, mainthread
 from kivy.properties import StringProperty, ListProperty, ColorProperty, NumericProperty, ObjectProperty
 from threading import Thread
 from _files.dataBase import Database
+from datetime import datetime
+from widgets.popups import ConfirmDialog
 
 Builder.load_file("views/users/users.kv")
 class Users(BoxLayout):
-
     callback = ObjectProperty(allownone=True)
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
         Clock.schedule_once(self.render, .1)
+        self.currentUser = None
 
 
     def render(self, _):
@@ -41,43 +44,59 @@ class Users(BoxLayout):
         self.set_users(data.select_data("user", fetchall= True))
     
     def add_users(self,mv):
-        firstName = mv.ids.firstName
-        lastName = mv.ids.lastName
-        username = mv.ids.username
-        pwd = mv.ids.pwd
-        cpwd = mv.ids.cpwd
+        pwd = mv.ids.password_input.text
+        #cpwd = mv.ids.cpwd
         
-        if len(firstName.text.strip()) < 3:
+        if len(mv.ids.firstName_input.text.strip()) < 3:
             return
-        _pwd = pwd.text.strip()
+        _pwd = pwd.strip()
         upass = hashlib.sha256(_pwd.encode()).hexdigest()
         now = datetime.now()
         _now = datetime.strftime(now, "%Y/%m/%d %H:%M")
         
-        user = {
-                "firstName": firstName.text.strip(),
-                "lastName": lastName.text.strip(),
-                "username": username.text.strip(),
-                "password": upass,
-                "createdAt": _now,
-                "signedIn": _now,
-            },  
-        self.set_users([user])
-    
+        user = [['',
+                mv.ids.firstName_input.text.strip(),
+                mv.ids.lastName_input.text.strip(),
+                mv.ids.username_input.text.strip(),
+                upass,
+                "master",
+                "mahmod.exaxa@nnn.com",
+                _now,
+                _now,
+            ],]
+
+        self.set_users(user)
+    def delete_from_view(self, ConfirmDialog):
+        if self.currentUser:
+            self.currentUser.parent.remove_widget(self.currentUser)
+            
+    def delete_user(self, user):
+        self.currentUser = user
+        dc = ConfirmDialog()
+        dc.title = "Delete User"
+        dc.subtitle = "are you sure to Delete"
+        dc.textConfirm = "yes, Delete"
+        dc.textCancel = "Cancel"
+        dc.confirmColor = App.get_running_app().color_tertiary
+        dc.cancelColor = App.get_running_app().color_primary
+        dc.confirmCallback = self.delete_from_view
+        dc.open()
     def update_user(self, user):
-        mv = ModUser()
-        mv.firstName = user.firstName
-        mv.lastName = user.lastName
-        mv.username = user.username
-        mv.callback = self.set_update
-        mv.open()
+            mv = ModUser()
+            mv.firstName = user.firstName
+            mv.lastName = user.lastName
+            mv.username = user.username
+            mv.callback = self.set_update
+            mv.open()
     def set_update(self, mv):
         print("update")
     @mainthread
     def set_users(self, users:list):
         self.ids.g1_users.clear_widgets()
-        print(users)
         for u in users:
+            u = list(u)
+            print(u)
+
             ut = UserTile()
             ut.firstName = u[1]
             ut.lastName = u[2]
@@ -87,6 +106,7 @@ class Users(BoxLayout):
             ut.signedIn = u[6]
             ut.roles = u[7]
             ut.email = u[8]
+            ut.callback = self.delete_user
             ut.bind(on_release= self.update_user)
             self.ids.g1_users.add_widget(ut)
 
@@ -94,22 +114,10 @@ class Users(BoxLayout):
         
     def add_new(self):
         md = ModUser()
+        md.callback = self.add_users
         md.open()
     
 
-class DeleteConfirm(ModalView):
-    callback = ObjectProperty(allownone= True)
-    def __init__(self, **kw) -> None:
-        super().__init__(**kw)
-        Clock.schedule_once(self.render, .1)
-    def render(self, _):
-        prods = []
-    def complete(self):
-        # to-do: print the receipt and make a record in database for the orderd item and isigtes
-        self.dismiss()
-        if self.callback:
-            self.callback(self)
-            
 class ModUser(ModalView):
     callback = ObjectProperty(allownone=True)
     firstName = StringProperty("")
@@ -124,21 +132,17 @@ class ModUser(ModalView):
 
     def render(self, _):
         pass
-    def on_first_name(self, inst, fname):
-        self.ids.firstName.text = firstName
-        self.ids.subtitle = "Enter your Details below"
+    def on_firstName(self, inst, firstName):
+        self.ids.firstName_input.text = firstName
+        self.ids.subtitle.text = "Enter your Details below"
         self.ids.btn_confirm.text = "Update User"
-        self.ids.title = "update User"
-
-    def on_last_name(self, inst, lname):
-        self.ids.lname.text = lastname
+        self.ids.title.text = "update User"
+    def on_lastName(self, inst, lastName):
+        self.ids.lastName_input.text = lastName
     def on_username(self, inst, username):
-        self.ids.user.text = username
+        self.ids.username_input.text = username
     
     
-    def delete_user(self, user):
-        dc = DeleteConfirm()
-        dc.open()
 class UserTile(ButtonBehavior, BoxLayout):
     firstName = StringProperty("")
     lastName = StringProperty("")
@@ -154,5 +158,10 @@ class UserTile(ButtonBehavior, BoxLayout):
         super().__init__(**kwargs)
         Clock.schedule_once(self.render, .1)
 
+    def delete_user(self):
+        if self.callback:
+            self.callback(self)
+        
+        
     def render(self, _):
         pass

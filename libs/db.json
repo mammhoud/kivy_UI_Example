@@ -1,0 +1,55 @@
+{
+  customers: [
+    {
+      id: 1,
+      name: John Doe,
+      address: 123 Main Street,
+      phone: 123-456-7890,
+      email: john.doe@example.com,
+      dateOfBirth: 1980-01-01,
+      gender: male,
+      notes: 
+    },
+    {
+      id: 2,
+      name: Jane Doe,
+      address: 456 Elm Street,
+      phone: 456-789-0123,
+      email: jane.doe@example.com,
+      dateOfBirth: 1981-02-02,
+      gender: female,
+      notes: 
+    }
+  ],
+  products: [
+    {
+      id: 1,
+      name: Product 1,
+      description: This is a product description.,
+      price: 10.00,
+      quantityInStock: 10,
+      category: Category 1,
+      brand: Brand 1,
+      image: https://example.com/product-1.jpg
+    },
+    {
+      id: 2,
+      name: Product 2,
+      description: This is another product description.,
+      price: 20.00,
+      quantityInStock: 5,
+      category: Category 2,
+      brand: Brand 2,
+      image: https://example.com/product-2.jpg
+    }
+  ],
+  orders: [
+    {
+      id: 1,
+      customerId: 1,
+      date: 2023-07-08
+      
+    }
+  ]
+  
+  }

@@ -1,0 +1,75 @@
+Customers:
+
+Customer ID: A unique identifier for each customer.
+Name: The customer's name.
+Address: The customer's address.
+Phone_Number: The customer's phone number.
+Email_Address: The customer's email address.
+Date_of_Birth: The customer's date of birth.
+Gender: The customer's gender.
+Customer Type: The type of customer, such as retail or wholesale.
+Notes: Any additional notes about the customer.
+---------------------------------------------------------------------------------------------
+
+Products:
+
+Product ID: A unique identifier for each product.
+Name: The product's name.
+Description: A description of the product.
+Price: The product's price.
+Quantity in Stock: The quantity of the product that is currently in stock.
+Reorder Point: The quantity of the product at which a new order should be placed.
+Category: The product's category, such as clothing or electronics.
+Brand: The product's brand.
+Image: The product's image.
+---------------------------------------------------------------------------------------------
+
+Orders:
+
+Order ID: A unique identifier for each order.
+Customer ID: The ID of the customer who placed the order.
+Date: The date the order was placed.
+Time: The time the order was placed.
+Status: The status of the order, such as "Pending" or "Shipped."
+Payment Type: The type of payment that was used to pay for the order.
+Shipping Address: The address to which the order was shipped.
+Products: A list of the products that were ordered.
+Quantity: The quantity of each product that was ordered.
+Total_Price: The total price of the order.
+---------------------------------------------------------------------------------------------
+
+Payments:
+
+Payment ID: A unique identifier for each payment.
+Order ID: The ID of the order that the payment was for.
+Date: The date the payment was made.
+Time: The time the payment was made.
+Amount: The amount of the payment.
+Type: The type of payment, such as credit card or PayPal.
+Transaction ID: The ID of the transaction that the payment was made through.
+---------------------------------------------------------------------------------------------
+
+Employees:
+
+Employee_ID: A unique identifier for each employee.
+Name: The employee's name.
+Address: The employee's address.
+Phone Number: The employee's phone number.
+Email Address: The employee's email address.
+Date_of_Birth: The employee's date of birth.
+Gender: The employee's gender.
+Job_Title: The employee's job title.
+Salary: The employee's salary.
+Notes: Any additional notes about the employee.
+---------------------------------------------------------------------------------------------
+
+Shifts:
+
+Shift_ID: A unique identifier for each shift.
+Employee ID: The ID of the employee who worked the shift.
+Start_Date: The start date of the shift.
+Start_Time: The start time of the shift.
+End_Date: The end date of the shift.
+End_Time: The end time of the shift.
+Location: The location where the shift was worked.
+Notes: Any additional notes about the shift.

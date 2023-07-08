@@ -3,7 +3,7 @@ import pandas as pd
 import csv
 
 class Database:
-    path = './_files/'
+    path = './libs/'
     dbName = 'store.db'
     def __init__(self):
         self.connection = sqlite3.connect(self.path+self.dbName)

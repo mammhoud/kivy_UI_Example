@@ -10,7 +10,7 @@ from kivy.metrics import dp, sp
 from kivy.lang import Builder
 from random import randint
 from widgets.popups import ConfirmDialog
-from _files.dataBase import Database
+from libs.dataBase import Database
 
 Builder.load_file("views/pos/pos.kv")
 

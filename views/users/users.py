@@ -10,7 +10,7 @@ from kivy.utils import rgba, QueryDict
 from kivy.clock import Clock, mainthread
 from kivy.properties import StringProperty, ListProperty, ColorProperty, NumericProperty, ObjectProperty
 from threading import Thread
-from _files.dataBase import Database
+from libs.dataBase import Database
 from datetime import datetime
 from widgets.popups import ConfirmDialog
 

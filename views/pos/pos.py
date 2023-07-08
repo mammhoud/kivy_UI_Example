@@ -9,6 +9,7 @@ from kivy.properties import StringProperty,ObjectProperty, ListProperty, ColorPr
 from kivy.metrics import dp, sp
 from kivy.lang import Builder
 from random import randint
+from widgets.popups import ConfirmDialog
 
 Builder.load_file("views/pos/pos.kv")
 class Pos(BoxLayout):
@@ -132,8 +133,14 @@ class Pos(BoxLayout):
        
        grid.add_widget(pt)
     def checkout(self):
-        pc = PosCheckout()
-        pc.callback = self.checkout_callback
+        pc = ConfirmDialog()
+        pc.title = "Check out"
+        pc.subtitle = "are you sure to confirm"
+        pc.textConfirm = "yes, confirm"
+        pc.textCancel = "Cancel"
+        pc.confirmColor = App.get_running_app().color_tertiary
+        pc.cancelColor = App.get_running_app().color_primary
+        pc.confirmCallback = self.checkout_callback
         pc.open()
     def clear_cart(self):
         self.current_cart= []
@@ -177,16 +184,3 @@ class ReceiptItem(BoxLayout):
     def render(self, _):
         pass 
     
-class PosCheckout(ModalView):
-    callback = ObjectProperty(allownone= True)
-    def __init__(self, **kw) -> None:
-        super().__init__(**kw)
-        Clock.schedule_once(self.render, .1)
-    def render(self, _):
-        prods = []
-    def complete(self):
-        # to-do: print the receipt and make a record in database for the orderd item and isigtes
-        self.dismiss()
-        if self.callback:
-            self.callback(self)
-            

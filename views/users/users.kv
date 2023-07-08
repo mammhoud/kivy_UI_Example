@@ -254,7 +254,18 @@
 							hint_text_color: app.color_primary_text
 							font_size: app.fonts.size.h2
 							multiline: False
-
+					BackBox:
+						size_hint_y: None
+						height: dp(64)
+						bcolor: app.color_secondary_bg
+						radius: [self.height*.1]
+						padding: [dp(12), dp(2)]
+						FlatField:
+							id: email_input
+							hint_text: "Email"
+							hint_text_color: app.color_primary_text
+							font_size: app.fonts.size.h2
+							multiline: False
 					BackBox:
 						size_hint_y: None
 						height: dp(64)
@@ -281,6 +292,25 @@
 							font_size: app.fonts.size.h2
 							multiline: False
 							password: True
+					BackBox:
+						size_hint_y: None
+						height: dp(64)
+						bcolor: app.color_secondary_bg
+						radius: [self.height*.1]
+						padding: [dp(12), dp(2)]
+						Spinner:
+							id: role_input
+							text:"Role"
+							font_name: app.fonts.styled
+							color: app.color_primary_text
+							font_size: app.fonts.size.h2
+							#text_size: self.size
+							halign: "center"
+							valign: "middle"
+							values: ['Admin', 'Cashier', "User"]
+							background_normal: ""
+							background_down: ""
+							background_color: [0,0,0,0]
 					Widget:
 					BackBox:
 						size_hint_y: None

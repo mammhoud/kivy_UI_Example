@@ -10,15 +10,17 @@ from kivy.metrics import dp, sp
 from kivy.lang import Builder
 from random import randint
 from widgets.popups import ConfirmDialog
+from _files.dataBase import Database
 
 Builder.load_file("views/pos/pos.kv")
+
 class Pos(BoxLayout):
     current_total = NumericProperty(0.0)
     current_cart = ListProperty([])
     def __init__(self, **kw):
-    
         super().__init__(**kw)
         Clock.schedule_once(self.render, .1)
+
 
     def render(self, _):
         prods = []
@@ -40,7 +42,31 @@ class Pos(BoxLayout):
                    }
             cats.append(cat)
         self.ids.ti_search1.sugData = cats
-
+    """
+    def delete_from_view(self, ConfirmDialog):
+        if self.currentUser:
+            self.currentUser.parent.remove_widget(self.currentUser)
+            data = Database()
+            print(self.currentUser)
+            data.delete_data('user', where_clause=f"WHERE username = '{self.currentUser.username}'" )
+            
+    def delete_product(self, user):
+        self.currentUser = user
+        dc = ConfirmDialog()
+        try:
+            dc.title = f"Delete User: {user.username}"
+        except Exception as e:
+            print(e)
+        finally:
+            print(user)
+            dc.subtitle = "are you sure to Delete"
+            dc.textConfirm = "yes, Delete"
+            dc.textCancel = "Cancel"
+            dc.confirmColor = App.get_running_app().color_tertiary
+            dc.cancelColor = App.get_running_app().color_primary
+            dc.confirmCallback = self.delete_from_view
+            
+            """
         
     def qty_control(self, tile, increasing=False):
         _qty = int(tile.qty)
@@ -48,25 +74,23 @@ class Pos(BoxLayout):
             _qty += 1
         else:
             _qty -= 1
-            if _qty < 0: 
-                # todo => {ask} delete or not delete if the minus clicked
+            if _qty <= 0: 
                 _qty = 0
+                # todo => {ask} delete or not delete if the minus clicked
+
         data = { 
         "name": tile.name,
-        "pcode": tile.pcode,
+        "pro_code": tile.pro_code,
         "price": tile.price,
         "qty": 1
         }
-         
-        _id = tile.pcode
+        _id = tile.pro_code
         tgt = None
         tmp = list(self.current_cart)
         for i, x in enumerate(tmp):
-            if x["pcode"] == _id:
+            if x["pro_code"] == _id:
                 tgt = i
                 break
-                
-           
         data["qty"] = _qty
         data["price"] = (data["price"])
         self.current_cart.pop(i)
@@ -79,21 +103,21 @@ class Pos(BoxLayout):
                 "cat_name": inst.sug2,
                 "cat_id": inst.sug1,
                 "cat_des": inst.sug3}        
-    
+
     def add_product(self,inst):
         data = { 
                 "name": inst.sug2,
-                "pcode": inst.sug1,
+                "pro_code": inst.sug1,
                 "price": inst.sug3,
                 "qty": 1}
-        tmp = list(filter(lambda x: x["pcode"]==inst.sug1, self.current_cart))
+        tmp = list(filter(lambda x: x["pro_code"]==inst.sug1, self.current_cart))
        
         if len(tmp)>0:
             #update qty 
             grid = self.ids.g1_products
             tgt = None
             for c in grid.children:
-                if c.pcode == tmp[0]['pcode']:
+                if c.pro_code == tmp[0]['pro_code']:
                     tgt = c
                     break
             if tgt:
@@ -125,7 +149,7 @@ class Pos(BoxLayout):
        grid = self.ids.g1_products
        
        pt = ProductTile()
-       pt.pcode = product.get("pcode", "")
+       pt.pro_code = product.get("pro_code", "")
        pt.name = product.get("name", "")
        pt.price = product.get("price", 0)
        pt.qty = product.get("qty", 0)
@@ -161,7 +185,7 @@ class Pos(BoxLayout):
 
        
 class ProductTile(BoxLayout):
-    pcode = NumericProperty(0)
+    pro_code = NumericProperty(0)
     name = StringProperty("")
     qty = NumericProperty(0)    
     price = NumericProperty(0)
@@ -174,7 +198,7 @@ class ProductTile(BoxLayout):
     
 
 class ReceiptItem(BoxLayout):
-    pcode = NumericProperty(0)
+    pro_code = NumericProperty(0)
     name = StringProperty("")
     qty = NumericProperty(0)    
     price = NumericProperty(0)

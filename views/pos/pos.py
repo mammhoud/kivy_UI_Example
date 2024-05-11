@@ -14,10 +14,10 @@ from kivy.properties import (
 )
 from kivy.metrics import dp, sp
 from kivy.lang import Builder
-from random import randint
 from widgets.popups import ConfirmDialog
 
 from libs.database_Conf import Database
+import secrets
 
 Builder.load_file("views/pos/pos.kv")
 
@@ -38,7 +38,7 @@ class Pos(BoxLayout):
             prod = {
                 "sug2": f"Product #0{x}",
                 "sug1": str(x).zfill(8),
-                "sug3": randint(1, 303),
+                "sug3": secrets.SystemRandom().randint(1, 303),
                 "qty": 1,
             }
             prods.append(prod)
@@ -47,7 +47,7 @@ class Pos(BoxLayout):
             cat = {
                 "sug2": f"category #0{x}",
                 "sug1": str(x).zfill(8),
-                "sug3": randint(1, 303),
+                "sug3": secrets.SystemRandom().randint(1, 303),
             }
             cats.append(cat)
         self.ids.ti_search1.sugData = cats

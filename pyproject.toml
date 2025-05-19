@@ -1,0 +1,108 @@
+[project]
+dynamic = ["version"]
+requires-python = ">=3.10"
+# version = "0.1"
+license = "MIT"
+keywords = []
+
+authors = [
+  { name = "mammhoud", email = "Mahmoud.Ezzat.Moustafa@Gmail.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+
+name = "kivy-POS"
+description = ""
+readme = "README.md"
+
+dependencies = [
+    "certifi>=2025.1.31",
+    "charset-normalizer>=3.4.1",
+    "docutils>=0.21.2",
+    "idna>=3.10",
+    "kivy>=2.3.1",
+    "kivy-garden>=0.1.5",
+    "pygments>=2.19.1",
+    "requests>=2.32.3",
+    "urllib3>=2.3.0",
+    "django>=5.2.1",
+    "pandas>=2.2.3",
+]
+
+
+
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+
+[tool.ruff.lint.isort]
+case-sensitive = true
+
+[tool.black]
+target-version = ["py311"]
+line-length = 80
+
+
+[tool.ruff]
+# Set the maximum line length to 79.
+line-length = 80
+[tool.ruff.lint]
+# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by docker.
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+    "UP", # pyupgrade
+]
+
+ignore = [
+    "E501", # line too long, handled by black
+    "B905", # zip() without strict=True
+    "C901", # too complex
+    "I001", # Auto organize import
+    "F403", # Import Into if condition Block
+    ]
+
+
+# Add the `line-too-long` rule to the enforced rule set. By default, Ruff omits rules that
+# overlap with the use of a formatter, like Black, but we can override this behavior by
+# explicitly adding the rule.
+
+extend-select = [
+    "F405", # object listing on schema api blocks
+    "F811", # var with only one char (_)
+    "B904", # except str expr formatter
+]
+
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+
+[tool.uv]
+managed = true

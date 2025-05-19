@@ -1,4 +1,3 @@
-
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
@@ -8,15 +7,22 @@ from kivy.utils import rgba, QueryDict
 
 from kivy.clock import Clock, mainthread
 
-from kivy.properties import StringProperty, ListProperty, ColorProperty, NumericProperty, ObjectProperty
+from kivy.properties import (
+    StringProperty,
+    ListProperty,
+    ColorProperty,
+    NumericProperty,
+    ObjectProperty,
+)
 
 
-Builder.load_file('views/home/home.kv')
+Builder.load_file("views/home/home.kv")
+
+
 class Home(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        Clock.schedule_once(self.render, .1)
+        Clock.schedule_once(self.render, 0.1)
 
     def render(self, _):
         pass
-        

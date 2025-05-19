@@ -226,7 +226,6 @@ dependencies = [
     { name = "idna" },
     { name = "kivy" },
     { name = "kivy-garden" },
-    { name = "livy" },
     { name = "pandas" },
     { name = "pygments" },
     { name = "requests" },
@@ -242,24 +241,10 @@ requires-dist = [
     { name = "idna", specifier = ">=3.10" },
     { name = "kivy", specifier = ">=2.3.1" },
     { name = "kivy-garden", specifier = ">=0.1.5" },
-    { name = "livy", specifier = ">=0.8.0" },
     { name = "pandas", specifier = ">=2.2.3" },
     { name = "pygments", specifier = ">=2.19.1" },
     { name = "requests", specifier = ">=2.32.3" },
     { name = "urllib3", specifier = ">=2.3.0" },
-]
-
-[[package]]
-name = "livy"
-version = "0.8.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pandas" },
-    { name = "requests" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/f5/b7/d6950e9d1adae327e8ffd65aea19886b73ec4f5020b1ec6c0761c0c830c0/livy-0.8.0.tar.gz", hash = "sha256:26ee2d1e4c6f27208bc83e4a80c1ceb678c2d3dc17ccd4592cb55d48181747f5", size = 21238 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/31/28/35366a5becc66fee927cd20b97cb30cd5b4057c9338aa3e3e0bed19d0c6d/livy-0.8.0-py3-none-any.whl", hash = "sha256:250f7334bab11929f7de94f4e83ec5f85d15fa8352cedbafa201438a5c133c18", size = 14587 },
 ]
 
 [[package]]

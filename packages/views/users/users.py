@@ -15,8 +15,9 @@ from kivy.properties import (
     ObjectProperty,
 )
 from threading import Thread
+from db.models import User
 
-from utils.database_Conf import Database
+# from utils.database_Conf import Database
 from datetime import datetime
 from widgets.popups import ConfirmDialog
 
@@ -37,28 +38,26 @@ class Users(BoxLayout):
         t1.start()
 
     def get_users(self):
-        """users = [
-        {
-            1: "firstName",
-            2: "lastName",
-            3: "username",
-            4: "*******",
-            5: "createdAt",#####
-            6: "signedIn",#####
-            7: "role",
-            8: "Email"
-        },
-        ]"""
-        data = Database()
-
-        self.set_users(data.select_data("user", fetchall=True))
+        users = User.objects.all().values_list(
+            "first_name",
+            "last_name",
+            "username",
+            "email",
+            "password",
+            "created_at",
+            "signed_in",
+            "role",
+        )
+        self.set_users(list(users))
 
     def add_users(self, mv):
         # cpwd = mv.ids.cpwd
 
         if len(mv.ids.firstName_input.text.strip()) < 3:
             return
-        upass = hashlib.sha256(mv.ids.password_input.text.strip().encode()).hexdigest()
+        upass = hashlib.sha256(
+            mv.ids.password_input.text.strip().encode()
+        ).hexdigest()
         _now = datetime.strftime(datetime.now(), "%Y/%m/%d %H:%M")
 
         user = [
@@ -71,19 +70,27 @@ class Users(BoxLayout):
             _now,
             mv.ids.role_input.text.strip(),
         ]
-        data = Database()
-
-        data.insert_data("user", user)
+        # data = Database()
+        User(
+            first_name=mv.ids.firstName_input.text.strip(),
+            last_name=mv.ids.lastName_input.text.strip(),
+            username=mv.ids.username_input.text.strip(),
+            email=mv.ids.email_input.text.strip(),
+            password=upass,
+        ).save()  ##update all using django orm
+        # data.insert_data("user", user)
         self.get_users()
 
     def delete_from_view(self, ConfirmDialog):
         if self.currentUser:
-            self.currentUser.parent.remove_widget(self.currentUser)
-            data = Database()
-            print(self.currentUser)
-            data.delete_data(
-                "user", where_clause=f"WHERE username = '{self.currentUser.username}'"
-            )
+            try:
+                user = User.objects.get(username=self.currentUser.username)
+                user.delete()
+                self.currentUser.parent.remove_widget(self.currentUser)
+            except User.DoesNotExist:
+                print("User not found in DB.")
+            except Exception as e:
+                print(f"Error deleting user: {e}")
 
     def delete_user(self, user):
         self.currentUser = user
@@ -114,34 +121,29 @@ class Users(BoxLayout):
         mv.open()
 
     def set_update(self, mv):
-        pwd = mv.ids.password_input.text
-        # cpwd = mv.ids.cpwd
+        pwd = mv.ids.password_input.text.strip()
         if len(mv.ids.firstName_input.text.strip()) < 3:
             return
-        _pwd = pwd.strip()
-        upass = hashlib.sha256(_pwd.encode()).hexdigest()
-        now = datetime.now()
-        _now = datetime.strftime(now, "%Y/%m/%d %H:%M")
 
-        user = [
-            mv.ids.firstName_input.text.strip(),
-            mv.ids.lastName_input.text.strip(),
-            mv.ids.username_input.text.strip(),
-            mv.ids.email_input.text.strip(),
-            upass,
-            _now,
-            _now,
-            mv.ids.role_input.text.strip(),
-        ]
+        try:
+            user = User.objects.get(username=self.modifyUser.username)
 
-        for i, a in enumerate(user):
-            if a == None:
-                user[i] = "None"
-        data = Database()
-        data.update_data(
-            "user", user, where_clause=f"WHERE username = '{self.modifyUser.username}'"
-        )
-        self.get_users()
+            user.first_name = mv.ids.firstName_input.text.strip()
+            user.last_name = mv.ids.lastName_input.text.strip()
+            user.username = mv.ids.username_input.text.strip()
+            user.email = mv.ids.email_input.text.strip()
+            if pwd:
+                user.password = hashlib.sha256(pwd.encode()).hexdigest()
+            user.role = mv.ids.role_input.text.strip()
+            user.signed_in = datetime.now()
+            user.save()
+
+            self.get_users()
+
+        except User.DoesNotExist:
+            print("User not found")
+        except Exception as e:
+            print(f"Update failed: {e}")
 
     @mainthread
     def set_users(self, users: list):
